@@ -1,0 +1,1589 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📚 英単語トレーニング 600語 - 中学1年生向け</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #4F46E5;
+            --primary-light: #E0E7FF;
+            --success: #10B981;
+            --success-light: #ECFDF5;
+            --danger: #EF4444;
+            --danger-light: #FEE2E2;
+            --warning: #F59E0B;
+            --warning-light: #FEF3C7;
+            --bg-primary: #FFFFFF;
+            --bg-secondary: #F3F4F6;
+            --bg-tertiary: #E5E7EB;
+            --text-primary: #1F2937;
+            --text-secondary: #6B7280;
+            --border: #D1D5DB;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667EEA 0%, #764BA2 100%);
+            min-height: 100vh;
+            padding: 0;
+            color: var(--text-primary);
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: var(--bg-primary);
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667EEA 0%, #764BA2 100%);
+            color: white;
+            padding: 2rem 1.5rem;
+            border-radius: 16px 16px 0 0;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.5px;
+        }
+
+        .header p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .content {
+            flex: 1;
+            padding: 2rem 1.5rem;
+            overflow-y: auto;
+        }
+
+        .progress-card {
+            background: linear-gradient(135deg, #667EEA 0%, #764BA2 100%);
+            color: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
+        }
+
+        .progress-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .progress-item {
+            text-align: center;
+        }
+
+        .progress-item label {
+            font-size: 12px;
+            opacity: 0.9;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .progress-item .value {
+            font-size: 28px;
+            font-weight: 700;
+        }
+
+        .progress-bar {
+            height: 8px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: white;
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+
+        .section {
+            margin-bottom: 1.5rem;
+        }
+
+        .section-label {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.8rem;
+        }
+
+        .difficulty-buttons {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 1.5rem;
+        }
+
+        .difficulty-btn {
+            padding: 12px 8px;
+            border: 1.5px solid var(--border);
+            background: var(--bg-secondary);
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+            transition: all 0.2s;
+            color: var(--text-primary);
+        }
+
+        .difficulty-btn:hover {
+            border-color: var(--primary);
+            background: var(--primary-light);
+        }
+
+        .difficulty-btn.active {
+            border-color: var(--primary);
+            background: var(--primary);
+            color: white;
+        }
+
+        .mode-button {
+            display: block;
+            width: 100%;
+            padding: 1.2rem;
+            margin-bottom: 10px;
+            background: var(--bg-secondary);
+            border: 1.5px solid var(--border);
+            border-radius: 10px;
+            cursor: pointer;
+            text-align: left;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .mode-button:hover {
+            border-color: var(--primary);
+            background: var(--primary-light);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .mode-button .icon {
+            font-size: 22px;
+            margin-bottom: 0.5rem;
+        }
+
+        .mode-button .title {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.3rem;
+        }
+
+        .mode-button .description {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        .screen {
+            display: none;
+        }
+
+        .screen.active {
+            display: block;
+        }
+
+        .screen-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .back-btn {
+            padding: 8px 12px;
+            border: 1px solid var(--border);
+            background: transparent;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13px;
+            color: var(--text-primary);
+            transition: all 0.2s;
+        }
+
+        .back-btn:hover {
+            background: var(--bg-secondary);
+            border-color: var(--primary);
+        }
+
+        .progress-text {
+            font-size: 13px;
+            color: var(--text-secondary);
+            background: var(--bg-secondary);
+            padding: 6px 12px;
+            border-radius: 6px;
+        }
+
+        .quiz-question {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 1.2rem;
+            margin-bottom: 1rem;
+        }
+
+        .quiz-question-text {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+
+        .option-btn {
+            padding: 10px;
+            border: 1.5px solid var(--border);
+            background: white;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 500;
+            transition: all 0.2s;
+            color: var(--text-primary);
+        }
+
+        .option-btn:hover {
+            border-color: var(--primary);
+            background: var(--primary-light);
+        }
+
+        .option-btn.selected {
+            border-color: var(--primary);
+            background: var(--primary);
+            color: white;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 12px;
+            background: var(--success);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 1.5rem;
+            transition: all 0.2s;
+        }
+
+        .submit-btn:hover:not(:disabled) {
+            background: #059669;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .result-screen {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .result-emoji {
+            font-size: 64px;
+            margin-bottom: 1rem;
+        }
+
+        .result-score {
+            font-size: 36px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .result-label {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .result-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 1.5rem;
+            width: 100%;
+        }
+
+        .result-btn {
+            padding: 10px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        .result-btn.primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .result-btn.primary:hover {
+            background: #4338CA;
+        }
+
+        .result-btn.secondary {
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            border: 1px solid var(--border);
+        }
+
+        .result-btn.secondary:hover {
+            border-color: var(--primary);
+            background: var(--primary-light);
+        }
+
+        .spelling-question {
+            background: linear-gradient(135deg, #667EEA 0%, #764BA2 100%);
+            color: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .spelling-meaning {
+            font-size: 28px;
+            font-weight: 700;
+            margin-top: 1rem;
+        }
+
+        .spelling-label {
+            font-size: 13px;
+            opacity: 0.9;
+            margin-bottom: 1rem;
+        }
+
+        .spelling-input {
+            width: 100%;
+            padding: 12px;
+            border: 1.5px solid var(--border);
+            border-radius: 8px;
+            font-size: 14px;
+            margin-bottom: 12px;
+            transition: all 0.2s;
+        }
+
+        .spelling-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            background: var(--primary-light);
+        }
+
+        .feedback {
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            text-align: center;
+        }
+
+        .feedback.correct {
+            background: var(--success-light);
+            color: var(--success);
+            border: 1px solid var(--success);
+        }
+
+        .feedback.incorrect {
+            background: var(--danger-light);
+            color: var(--danger);
+            border: 1px solid var(--danger);
+        }
+
+        .listen-btn {
+            width: 100%;
+            padding: 12px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-bottom: 12px;
+            transition: all 0.2s;
+        }
+
+        .listen-btn:hover {
+            background: #4338CA;
+            transform: scale(1.02);
+        }
+
+        .listen-btn:active {
+            transform: scale(0.98);
+        }
+
+        /* スクロール内容 */
+        .quiz-scroll {
+            max-height: 60vh;
+            overflow-y: auto;
+            margin-bottom: 1rem;
+            padding-right: 0.5rem;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .screen.active {
+            animation: fadeIn 0.3s ease;
+        }
+
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 24px;
+            }
+
+            .content {
+                padding: 1.5rem 1rem;
+            }
+
+            .progress-grid {
+                gap: 0.8rem;
+            }
+
+            .progress-item .value {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📚 英単語トレーニング</h1>
+            <p>中学1年生向け - 600語</p>
+        </div>
+
+        <div class="content">
+            <div id="homeScreen" class="screen active">
+                <div class="progress-card">
+                    <div class="progress-grid">
+                        <div class="progress-item">
+                            <label>学習した単語</label>
+                            <div class="value" id="learnedCount">0</div>
+                        </div>
+                        <div class="progress-item">
+                            <label>全単語数</label>
+                            <div class="value" id="totalCount">600</div>
+                        </div>
+                        <div class="progress-item">
+                            <label>達成度</label>
+                            <div class="value" id="progressPercent">0%</div>
+                        </div>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill" style="width: 0%;"></div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <div class="section-label">難易度を選択</div>
+                    <div class="difficulty-buttons">
+                        <button class="difficulty-btn active" data-difficulty="easy">初級<br>(200語)</button>
+                        <button class="difficulty-btn" data-difficulty="normal">中級<br>(200語)</button>
+                        <button class="difficulty-btn" data-difficulty="hard">上級<br>(200語)</button>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <div class="section-label">学習モードを選択</div>
+                    <button class="mode-button" data-mode="quiz">
+                        <div class="icon">❓</div>
+                        <div class="title">4択クイズ</div>
+                        <div class="description">日本語の意味から英単語を選ぶ</div>
+                    </button>
+                    <button class="mode-button" data-mode="listening">
+                        <div class="icon">🎧</div>
+                        <div class="title">リスニング練習</div>
+                        <div class="description">英単語の音声を聞いて選ぶ</div>
+                    </button>
+                    <button class="mode-button" data-mode="spelling">
+                        <div class="icon">✏️</div>
+                        <div class="title">スペリング練習</div>
+                        <div class="description">英単語の綴りを入力して練習</div>
+                    </button>
+                </div>
+            </div>
+
+            <div id="quizScreen" class="screen">
+                <div class="screen-header">
+                    <button class="back-btn">← ホーム</button>
+                    <span class="progress-text" id="quizProgress">0 / 0</span>
+                </div>
+                <div class="quiz-scroll" id="quizContainer"></div>
+                <button class="submit-btn" id="quizSubmitBtn">提出する</button>
+            </div>
+
+            <div id="listeningScreen" class="screen">
+                <div class="screen-header">
+                    <button class="back-btn">← ホーム</button>
+                    <span class="progress-text" id="listeningProgress">0 / 0</span>
+                </div>
+                <div class="quiz-scroll" id="listeningContainer"></div>
+                <button class="submit-btn" id="listeningSubmitBtn">提出する</button>
+            </div>
+
+            <div id="spellingScreen" class="screen">
+                <div class="screen-header">
+                    <button class="back-btn">← ホーム</button>
+                    <span class="progress-text" id="spellingProgress">0 / 0</span>
+                </div>
+                <div id="spellingQuestion"></div>
+                <input type="text" class="spelling-input" id="spellingInput" placeholder="英単語を入力..." autocomplete="off">
+                <div id="spellingFeedback"></div>
+                <button class="submit-btn" id="spellingCheckBtn">確認</button>
+            </div>
+
+            <div id="resultScreen" class="screen result-screen">
+                <div class="result-emoji" id="resultEmoji">🎉</div>
+                <div class="result-label">スコア</div>
+                <div class="result-score" id="resultScore">0 / 0</div>
+                <div class="result-buttons">
+                    <button class="result-btn primary" id="retryBtn">もう一度</button>
+                    <button class="result-btn secondary" id="homeBtn">ホーム</button>
+                </div>
+            </div>
+
+            <div id="completeScreen" class="screen result-screen">
+                <div class="result-emoji">🎊</div>
+                <div class="result-label" style="font-size: 18px; margin-bottom: 1.5rem;">すべて完了！</div>
+                <button class="result-btn primary" id="completeHomeBtn" style="width: 100%;">ホームに戻る</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 600語データセット
+        const wordData = {
+            easy: [
+                // 初級（200語）
+                // 挨拶・日常表現
+                { id: 1, word: 'hello', meaning: 'こんにちは', example: 'Hello, how are you?' },
+                { id: 2, word: 'goodbye', meaning: 'さようなら', example: 'Goodbye, see you tomorrow.' },
+                { id: 3, word: 'thank', meaning: 'ありがとう', example: 'Thank you very much.' },
+                { id: 4, word: 'yes', meaning: 'はい', example: 'Yes, I agree.' },
+                { id: 5, word: 'no', meaning: 'いいえ', example: 'No, I don\'t think so.' },
+                { id: 6, word: 'please', meaning: 'お願いします', example: 'Please help me.' },
+                { id: 7, word: 'sorry', meaning: 'ごめんなさい', example: 'Sorry, I\'m late.' },
+                { id: 8, word: 'name', meaning: '名前', example: 'What is your name?' },
+                { id: 9, word: 'good morning', meaning: 'おはよう', example: 'Good morning, everyone.' },
+                { id: 10, word: 'good night', meaning: 'おやすみなさい', example: 'Good night, sleep well.' },
+                // 数字（1-50）
+                { id: 11, word: 'one', meaning: '1', example: 'I have one apple.' },
+                { id: 12, word: 'two', meaning: '2', example: 'There are two books.' },
+                { id: 13, word: 'three', meaning: '3', example: 'I see three birds.' },
+                { id: 14, word: 'four', meaning: '4', example: 'There are four chairs.' },
+                { id: 15, word: 'five', meaning: '5', example: 'I eat five candies.' },
+                { id: 16, word: 'six', meaning: '6', example: 'She has six pencils.' },
+                { id: 17, word: 'seven', meaning: '7', example: 'Seven days a week.' },
+                { id: 18, word: 'eight', meaning: '8', example: 'Eight students are here.' },
+                { id: 19, word: 'nine', meaning: '9', example: 'Nine people are waiting.' },
+                { id: 20, word: 'ten', meaning: '10', example: 'I have ten fingers.' },
+                { id: 21, word: 'eleven', meaning: '11', example: 'Eleven o\'clock.' },
+                { id: 22, word: 'twelve', meaning: '12', example: 'Twelve months a year.' },
+                { id: 23, word: 'thirteen', meaning: '13', example: 'I\'m thirteen years old.' },
+                { id: 24, word: 'fourteen', meaning: '14', example: 'Fourteen students.' },
+                { id: 25, word: 'fifteen', meaning: '15', example: 'Fifteen minutes.' },
+                { id: 26, word: 'twenty', meaning: '20', example: 'Twenty days.' },
+                { id: 27, word: 'thirty', meaning: '30', example: 'Thirty seconds.' },
+                { id: 28, word: 'forty', meaning: '40', example: 'Forty books.' },
+                { id: 29, word: 'fifty', meaning: '50', example: 'Fifty people.' },
+                { id: 30, word: 'hundred', meaning: '100', example: 'One hundred yen.' },
+                // 基本的な名詞（30語）
+                { id: 31, word: 'school', meaning: '学校', example: 'I go to school every day.' },
+                { id: 32, word: 'student', meaning: '学生', example: 'I am a student.' },
+                { id: 33, word: 'teacher', meaning: '先生', example: 'My teacher is kind.' },
+                { id: 34, word: 'book', meaning: '本', example: 'I read a book.' },
+                { id: 35, word: 'pen', meaning: 'ペン', example: 'This is my pen.' },
+                { id: 36, word: 'pencil', meaning: '鉛筆', example: 'I write with a pencil.' },
+                { id: 37, word: 'desk', meaning: '机', example: 'The desk is brown.' },
+                { id: 38, word: 'chair', meaning: '椅子', example: 'Sit on this chair.' },
+                { id: 39, word: 'door', meaning: 'ドア', example: 'Open the door.' },
+                { id: 40, word: 'window', meaning: '窓', example: 'Look out the window.' },
+                { id: 41, word: 'house', meaning: '家', example: 'I live in a house.' },
+                { id: 42, word: 'room', meaning: '部屋', example: 'This is my room.' },
+                { id: 43, word: 'bed', meaning: 'ベッド', example: 'I sleep on a bed.' },
+                { id: 44, word: 'table', meaning: 'テーブル', example: 'Put the book on the table.' },
+                { id: 45, word: 'wall', meaning: '壁', example: 'The wall is white.' },
+                { id: 46, word: 'floor', meaning: '床', example: 'The floor is clean.' },
+                { id: 47, word: 'ceiling', meaning: '天井', example: 'The ceiling is high.' },
+                { id: 48, word: 'picture', meaning: '絵', example: 'There is a picture on the wall.' },
+                { id: 49, word: 'clock', meaning: '時計', example: 'What time is it?' },
+                { id: 50, word: 'watch', meaning: '腕時計', example: 'I have a new watch.' },
+                // 家族（10語）
+                { id: 51, word: 'family', meaning: '家族', example: 'My family is happy.' },
+                { id: 52, word: 'father', meaning: '父', example: 'My father is kind.' },
+                { id: 53, word: 'mother', meaning: '母', example: 'My mother cooks.' },
+                { id: 54, word: 'brother', meaning: '兄・弟', example: 'I have a brother.' },
+                { id: 55, word: 'sister', meaning: '姉・妹', example: 'She is my sister.' },
+                { id: 56, word: 'grandmother', meaning: 'おばあさん', example: 'My grandmother is old.' },
+                { id: 57, word: 'grandfather', meaning: 'おじいさん', example: 'My grandfather likes fishing.' },
+                { id: 58, word: 'parent', meaning: '親', example: 'Parents love their children.' },
+                { id: 59, word: 'child', meaning: '子供', example: 'The child is playing.' },
+                { id: 60, word: 'baby', meaning: '赤ちゃん', example: 'The baby is crying.' },
+                // 身体部分（15語）
+                { id: 61, word: 'head', meaning: '頭', example: 'I have a headache.' },
+                { id: 62, word: 'face', meaning: '顔', example: 'She has a beautiful face.' },
+                { id: 63, word: 'eye', meaning: '目', example: 'My eyes are brown.' },
+                { id: 64, word: 'nose', meaning: '鼻', example: 'The nose is on the face.' },
+                { id: 65, word: 'mouth', meaning: '口', example: 'Open your mouth.' },
+                { id: 66, word: 'ear', meaning: '耳', example: 'I hear with my ears.' },
+                { id: 67, word: 'hand', meaning: '手', example: 'I have two hands.' },
+                { id: 68, word: 'arm', meaning: '腕', example: 'My arm is long.' },
+                { id: 69, word: 'leg', meaning: '脚', example: 'I have two legs.' },
+                { id: 70, word: 'foot', meaning: '足', example: 'I walk with my feet.' },
+                { id: 71, word: 'back', meaning: '背中', example: 'He is behind my back.' },
+                { id: 72, word: 'hair', meaning: '髪', example: 'She has long hair.' },
+                { id: 73, word: 'tooth', meaning: '歯', example: 'I brush my teeth.' },
+                { id: 74, word: 'heart', meaning: '心臓', example: 'My heart is beating.' },
+                { id: 75, word: 'finger', meaning: '指', example: 'I have ten fingers.' },
+                // 食べ物（20語）
+                { id: 76, word: 'apple', meaning: 'りんご', example: 'I eat an apple every day.' },
+                { id: 77, word: 'banana', meaning: 'バナナ', example: 'Do you like bananas?' },
+                { id: 78, word: 'orange', meaning: 'オレンジ', example: 'An orange is round.' },
+                { id: 79, word: 'bread', meaning: 'パン', example: 'I eat bread for breakfast.' },
+                { id: 80, word: 'rice', meaning: 'ご飯', example: 'Japanese people eat rice.' },
+                { id: 81, word: 'meat', meaning: '肉', example: 'The meat is delicious.' },
+                { id: 82, word: 'fish', meaning: '魚', example: 'Fish live in water.' },
+                { id: 83, word: 'egg', meaning: '卵', example: 'An egg is white.' },
+                { id: 84, word: 'milk', meaning: 'ミルク', example: 'I drink milk every day.' },
+                { id: 85, word: 'water', meaning: '水', example: 'Drink water every day.' },
+                { id: 86, word: 'coffee', meaning: 'コーヒー', example: 'I like coffee.' },
+                { id: 87, word: 'tea', meaning: 'お茶', example: 'Tea is hot.' },
+                { id: 88, word: 'juice', meaning: 'ジュース', example: 'This juice is sweet.' },
+                { id: 89, word: 'cake', meaning: 'ケーキ', example: 'The cake is delicious.' },
+                { id: 90, word: 'candy', meaning: 'キャンディ', example: 'I like candy.' },
+                { id: 91, word: 'cheese', meaning: 'チーズ', example: 'Cheese is tasty.' },
+                { id: 92, word: 'butter', meaning: 'バター', example: 'Add butter to the bread.' },
+                { id: 93, word: 'salt', meaning: '塩', example: 'Add salt to the soup.' },
+                { id: 94, word: 'sugar', meaning: '砂糖', example: 'Sugar is sweet.' },
+                { id: 95, word: 'soup', meaning: 'スープ', example: 'The soup is hot.' },
+                // 動物（20語）
+                { id: 96, word: 'dog', meaning: '犬', example: 'My dog is cute.' },
+                { id: 97, word: 'cat', meaning: '猫', example: 'The cat is sleeping.' },
+                { id: 98, word: 'bird', meaning: '鳥', example: 'Birds can fly.' },
+                { id: 99, word: 'cow', meaning: '牛', example: 'Cows give milk.' },
+                { id: 100, word: 'pig', meaning: '豚', example: 'Pigs are fat.' },
+                { id: 101, word: 'horse', meaning: '馬', example: 'Horses can run fast.' },
+                { id: 102, word: 'sheep', meaning: '羊', example: 'Sheep are white.' },
+                { id: 103, word: 'chicken', meaning: '鶏', example: 'Chickens lay eggs.' },
+                { id: 104, word: 'duck', meaning: 'アヒル', example: 'Ducks swim in the water.' },
+                { id: 105, word: 'elephant', meaning: '象', example: 'Elephants are big.' },
+                { id: 106, word: 'lion', meaning: 'ライオン', example: 'Lions are strong.' },
+                { id: 107, word: 'tiger', meaning: 'トラ', example: 'Tigers are dangerous.' },
+                { id: 108, word: 'monkey', meaning: '猿', example: 'Monkeys eat bananas.' },
+                { id: 109, word: 'bear', meaning: '熊', example: 'Bears are big.' },
+                { id: 110, word: 'rabbit', meaning: 'ウサギ', example: 'Rabbits have long ears.' },
+                { id: 111, word: 'snake', meaning: 'ヘビ', example: 'Snakes are dangerous.' },
+                { id: 112, word: 'insect', meaning: '昆虫', example: 'Insects are small.' },
+                { id: 113, word: 'bee', meaning: 'ミツバチ', example: 'Bees make honey.' },
+                { id: 114, word: 'butterfly', meaning: 'チョウ', example: 'Butterflies are beautiful.' },
+                { id: 115, word: 'mouse', meaning: 'ネズミ', example: 'Mice are small.' },
+                // 基本的な動詞 - 第1グループ(30語)
+                { id: 116, word: 'go', meaning: '行く', example: 'I go to school.' },
+                { id: 117, word: 'come', meaning: '来る', example: 'Come here.' },
+                { id: 118, word: 'eat', meaning: '食べる', example: 'I eat breakfast.' },
+                { id: 119, word: 'drink', meaning: '飲む', example: 'I drink water.' },
+                { id: 120, word: 'sleep', meaning: '寝る', example: 'I sleep at night.' },
+                { id: 121, word: 'wake', meaning: '起きる', example: 'I wake up at 7.' },
+                { id: 122, word: 'sit', meaning: '座る', example: 'Sit down.' },
+                { id: 123, word: 'stand', meaning: '立つ', example: 'Stand up.' },
+                { id: 124, word: 'walk', meaning: '歩く', example: 'I walk to school.' },
+                { id: 125, word: 'run', meaning: '走る', example: 'I run in the park.' },
+                { id: 126, word: 'play', meaning: '遊ぶ', example: 'We play after school.' },
+                { id: 127, word: 'work', meaning: '働く', example: 'My father works.' },
+                { id: 128, word: 'study', meaning: '勉強する', example: 'I study English.' },
+                { id: 129, word: 'read', meaning: '読む', example: 'I read books.' },
+                { id: 130, word: 'write', meaning: '書く', example: 'I write a letter.' },
+                { id: 131, word: 'listen', meaning: '聞く', example: 'Listen to me.' },
+                { id: 132, word: 'speak', meaning: '話す', example: 'I speak English.' },
+                { id: 133, word: 'talk', meaning: '話す', example: 'Let\'s talk.' },
+                { id: 134, word: 'look', meaning: '見る', example: 'Look at the picture.' },
+                { id: 135, word: 'see', meaning: '見える', example: 'I see a bird.' },
+                { id: 136, word: 'watch', meaning: '見る', example: 'I watch TV.' },
+                { id: 137, word: 'hear', meaning: '聞く', example: 'I hear music.' },
+                { id: 138, word: 'think', meaning: '思う', example: 'I think so.' },
+                { id: 139, word: 'know', meaning: '知る', example: 'I know him.' },
+                { id: 140, word: 'like', meaning: '好き', example: 'I like English.' },
+                { id: 141, word: 'want', meaning: 'ほしい', example: 'I want a pen.' },
+                { id: 142, word: 'have', meaning: 'ある', example: 'I have a pen.' },
+                { id: 143, word: 'make', meaning: '作る', example: 'I make a cake.' },
+                { id: 144, word: 'draw', meaning: '描く', example: 'I draw a picture.' },
+                { id: 145, word: 'sing', meaning: '歌う', example: 'I sing a song.' },
+                // 基本的な形容詞 - 簡単(20語)
+                { id: 146, word: 'good', meaning: 'よい', example: 'Good morning.' },
+                { id: 147, word: 'bad', meaning: '悪い', example: 'Bad weather.' },
+                { id: 148, word: 'big', meaning: '大きい', example: 'Big house.' },
+                { id: 149, word: 'small', meaning: '小さい', example: 'Small bird.' },
+                { id: 150, word: 'happy', meaning: '幸せな', example: 'Happy face.' },
+                { id: 151, word: 'sad', meaning: '悲しい', example: 'Sad story.' },
+                { id: 152, word: 'beautiful', meaning: '美しい', example: 'Beautiful girl.' },
+                { id: 153, word: 'ugly', meaning: '醜い', example: 'Ugly building.' },
+                { id: 154, word: 'nice', meaning: 'いい', example: 'Nice day.' },
+                { id: 155, word: 'kind', meaning: '親切な', example: 'Kind person.' },
+                { id: 156, word: 'strong', meaning: '強い', example: 'Strong man.' },
+                { id: 157, word: 'weak', meaning: '弱い', example: 'Weak body.' },
+                { id: 158, word: 'fast', meaning: '速い', example: 'Fast car.' },
+                { id: 159, word: 'slow', meaning: '遅い', example: 'Slow train.' },
+                { id: 160, word: 'hot', meaning: '暑い', example: 'Hot day.' },
+                { id: 161, word: 'cold', meaning: '寒い', example: 'Cold weather.' },
+                { id: 162, word: 'warm', meaning: '暖かい', example: 'Warm room.' },
+                { id: 163, word: 'wet', meaning: 'ぬれた', example: 'Wet clothes.' },
+                { id: 164, word: 'dry', meaning: '乾いた', example: 'Dry weather.' },
+                { id: 165, word: 'clean', meaning: 'きれいな', example: 'Clean room.' },
+                // 季節と時間（20語）
+                { id: 166, word: 'spring', meaning: '春', example: 'Spring is beautiful.' },
+                { id: 167, word: 'summer', meaning: '夏', example: 'Summer is hot.' },
+                { id: 168, word: 'autumn', meaning: '秋', example: 'Autumn leaves.' },
+                { id: 169, word: 'winter', meaning: '冬', example: 'Winter is cold.' },
+                { id: 170, word: 'morning', meaning: '朝', example: 'Good morning.' },
+                { id: 171, word: 'afternoon', meaning: '午後', example: 'Good afternoon.' },
+                { id: 172, word: 'evening', meaning: '夜', example: 'Good evening.' },
+                { id: 173, word: 'night', meaning: '夜中', example: 'Good night.' },
+                { id: 174, word: 'day', meaning: '日', example: 'Nice day.' },
+                { id: 175, word: 'week', meaning: '週', example: 'One week.' },
+                { id: 176, word: 'month', meaning: '月', example: 'One month.' },
+                { id: 177, word: 'year', meaning: '年', example: 'One year.' },
+                { id: 178, word: 'Monday', meaning: '月曜日', example: 'Monday is fun.' },
+                { id: 179, word: 'Tuesday', meaning: '火曜日', example: 'Tuesday test.' },
+                { id: 180, word: 'Wednesday', meaning: '水曜日', example: 'Wednesday is busy.' },
+                { id: 181, word: 'Thursday', meaning: '木曜日', example: 'Thursday fun.' },
+                { id: 182, word: 'Friday', meaning: '金曜日', example: 'Friday is nice.' },
+                { id: 183, word: 'Saturday', meaning: '土曜日', example: 'Saturday play.' },
+                { id: 184, word: 'Sunday', meaning: '日曜日', example: 'Sunday rest.' },
+                { id: 185, word: 'January', meaning: '1月', example: 'January is cold.' },
+                // 色（10語）
+                { id: 186, word: 'red', meaning: '赤', example: 'Red apple.' },
+                { id: 187, word: 'blue', meaning: '青', example: 'Blue sky.' },
+                { id: 188, word: 'yellow', meaning: '黄色', example: 'Yellow sun.' },
+                { id: 189, word: 'green', meaning: '緑', example: 'Green grass.' },
+                { id: 190, word: 'white', meaning: '白', example: 'White snow.' },
+                { id: 191, word: 'black', meaning: '黒', example: 'Black night.' },
+                { id: 192, word: 'pink', meaning: 'ピンク', example: 'Pink flower.' },
+                { id: 193, word: 'purple', meaning: '紫', example: 'Purple grape.' },
+                { id: 194, word: 'orange', meaning: 'オレンジ色', example: 'Orange color.' },
+                { id: 195, word: 'brown', meaning: '茶色', example: 'Brown tree.' },
+                // 天気（5語）
+                { id: 196, word: 'rain', meaning: '雨', example: 'Heavy rain.' },
+                { id: 197, word: 'snow', meaning: '雪', example: 'White snow.' },
+                { id: 198, word: 'wind', meaning: '風', example: 'Strong wind.' },
+                { id: 199, word: 'sunny', meaning: '晴れた', example: 'Sunny day.' },
+                { id: 200, word: 'cloudy', meaning: '曇った', example: 'Cloudy sky.' },
+            ],
+            normal: [
+                // 中級（200語）- 複雑な動詞
+                { id: 201, word: 'dance', meaning: 'ダンスする', example: 'She dances well.' },
+                { id: 202, word: 'swim', meaning: '泳ぐ', example: 'I swim in summer.' },
+                { id: 203, word: 'fly', meaning: '飛ぶ', example: 'Birds fly in the sky.' },
+                { id: 204, word: 'kick', meaning: 'ける', example: 'Kick the ball.' },
+                { id: 205, word: 'throw', meaning: '投げる', example: 'Throw the ball.' },
+                { id: 206, word: 'catch', meaning: 'つかまえる', example: 'Catch it!' },
+                { id: 207, word: 'push', meaning: '押す', example: 'Push the door.' },
+                { id: 208, word: 'pull', meaning: '引く', example: 'Pull the rope.' },
+                { id: 209, word: 'open', meaning: '開ける', example: 'Open the window.' },
+                { id: 210, word: 'close', meaning: '閉じる', example: 'Close the door.' },
+                { id: 211, word: 'turn', meaning: '回す', example: 'Turn left.' },
+                { id: 212, word: 'move', meaning: '動く', example: 'Don\'t move.' },
+                { id: 213, word: 'stop', meaning: '止まる', example: 'Stop here.' },
+                { id: 214, word: 'wait', meaning: '待つ', example: 'Wait for me.' },
+                { id: 215, word: 'follow', meaning: 'ついていく', example: 'Follow me.' },
+                { id: 216, word: 'teach', meaning: '教える', example: 'Teach me English.' },
+                { id: 217, word: 'learn', meaning: '学ぶ', example: 'I learn fast.' },
+                { id: 218, word: 'help', meaning: '手伝う', example: 'Help me please.' },
+                { id: 219, word: 'ask', meaning: '質問する', example: 'Ask me.' },
+                { id: 220, word: 'answer', meaning: '答える', example: 'Answer the question.' },
+                // 感情・状態(20語)
+                { id: 221, word: 'angry', meaning: '怒っている', example: 'He is angry.' },
+                { id: 222, word: 'tired', meaning: '疲れた', example: 'I am tired.' },
+                { id: 223, word: 'sick', meaning: '病気の', example: 'I feel sick.' },
+                { id: 224, word: 'afraid', meaning: '怖い', example: 'I am afraid.' },
+                { id: 225, word: 'excited', meaning: 'ワクワクした', example: 'I am excited.' },
+                { id: 226, word: 'bored', meaning: 'つまらない', example: 'I am bored.' },
+                { id: 227, word: 'surprised', meaning: '驚いた', example: 'I am surprised.' },
+                { id: 228, word: 'interested', meaning: '興味がある', example: 'I am interested.' },
+                { id: 229, word: 'worried', meaning: '心配している', example: 'She is worried.' },
+                { id: 230, word: 'lonely', meaning: '孤独な', example: 'He feels lonely.' },
+                { id: 231, word: 'proud', meaning: '誇りに思う', example: 'I am proud.' },
+                { id: 232, word: 'ashamed', meaning: '恥ずかしい', example: 'I am ashamed.' },
+                { id: 233, word: 'confused', meaning: '混乱している', example: 'I am confused.' },
+                { id: 234, word: 'calm', meaning: '落ち着いた', example: 'Stay calm.' },
+                { id: 235, word: 'nervous', meaning: '緊張した', example: 'I am nervous.' },
+                { id: 236, word: 'relaxed', meaning: 'リラックスした', example: 'I am relaxed.' },
+                { id: 237, word: 'cheerful', meaning: '陽気な', example: 'She is cheerful.' },
+                { id: 238, word: 'gloomy', meaning: '陰気な', example: 'He looks gloomy.' },
+                { id: 239, word: 'friendly', meaning: '親友的な', example: 'He is friendly.' },
+                { id: 240, word: 'polite', meaning: '丁寧な', example: 'Be polite.' },
+                // 学校関連(20語)
+                { id: 241, word: 'classroom', meaning: '教室', example: 'In the classroom.' },
+                { id: 242, word: 'library', meaning: '図書館', example: 'Go to library.' },
+                { id: 243, word: 'gym', meaning: '体育館', example: 'In the gym.' },
+                { id: 244, word: 'playground', meaning: 'グラウンド', example: 'Play on playground.' },
+                { id: 245, word: 'lunch', meaning: 'お昼', example: 'Eat lunch.' },
+                { id: 246, word: 'subject', meaning: '科目', example: 'What subject?' },
+                { id: 247, word: 'math', meaning: '数学', example: 'Math is hard.' },
+                { id: 248, word: 'science', meaning: '科学', example: 'Science fun.' },
+                { id: 249, word: 'history', meaning: '歴史', example: 'History is old.' },
+                { id: 250, word: 'geography', meaning: '地理', example: 'Geography study.' },
+                { id: 251, word: 'music', meaning: '音楽', example: 'Music is nice.' },
+                { id: 252, word: 'art', meaning: '美術', example: 'Art class.' },
+                { id: 253, word: 'exam', meaning: '試験', example: 'Hard exam.' },
+                { id: 254, word: 'homework', meaning: '宿題', example: 'Do homework.' },
+                { id: 255, word: 'test', meaning: 'テスト', example: 'Take a test.' },
+                { id: 256, word: 'grade', meaning: '成績', example: 'Good grade.' },
+                { id: 257, word: 'class', meaning: 'クラス', example: 'In class.' },
+                { id: 258, word: 'friend', meaning: '友達', example: 'My friend.' },
+                { id: 259, word: 'classmate', meaning: 'クラスメート', example: 'My classmate.' },
+                { id: 260, word: 'principal', meaning: '校長先生', example: 'Meet principal.' },
+                // 衣服(15語)
+                { id: 261, word: 'shirt', meaning: 'シャツ', example: 'Blue shirt.' },
+                { id: 262, word: 'pants', meaning: 'ズボン', example: 'Black pants.' },
+                { id: 263, word: 'dress', meaning: 'ドレス', example: 'Red dress.' },
+                { id: 264, word: 'shoes', meaning: '靴', example: 'New shoes.' },
+                { id: 265, word: 'hat', meaning: '帽子', example: 'Wear a hat.' },
+                { id: 266, word: 'coat', meaning: 'コート', example: 'Warm coat.' },
+                { id: 267, word: 'socks', meaning: '靴下', example: 'White socks.' },
+                { id: 268, word: 'tie', meaning: 'ネクタイ', example: 'Red tie.' },
+                { id: 269, word: 'jacket', meaning: 'ジャケット', example: 'Nice jacket.' },
+                { id: 270, word: 'skirt', meaning: 'スカート', example: 'Long skirt.' },
+                { id: 271, word: 'sweater', meaning: 'セーター', example: 'Warm sweater.' },
+                { id: 272, word: 'suit', meaning: 'スーツ', example: 'Business suit.' },
+                { id: 273, word: 'uniform', meaning: 'ユニフォーム', example: 'School uniform.' },
+                { id: 274, word: 'gloves', meaning: '手袋', example: 'Winter gloves.' },
+                { id: 275, word: 'scarf', meaning: 'スカーフ', example: 'Warm scarf.' },
+                // スポーツ(15語)
+                { id: 276, word: 'baseball', meaning: '野球', example: 'Play baseball.' },
+                { id: 277, word: 'basketball', meaning: 'バスケットボール', example: 'Basketball game.' },
+                { id: 278, word: 'soccer', meaning: 'サッカー', example: 'Soccer field.' },
+                { id: 279, word: 'tennis', meaning: 'テニス', example: 'Play tennis.' },
+                { id: 280, word: 'volleyball', meaning: 'バレーボール', example: 'Volleyball team.' },
+                { id: 281, word: 'swimming', meaning: '水泳', example: 'Swimming pool.' },
+                { id: 282, word: 'running', meaning: '走ること', example: 'Running race.' },
+                { id: 283, word: 'walking', meaning: '歩くこと', example: 'Walking path.' },
+                { id: 284, word: 'game', meaning: 'ゲーム', example: 'Play a game.' },
+                { id: 285, word: 'race', meaning: 'レース', example: 'Win the race.' },
+                { id: 286, word: 'ball', meaning: 'ボール', example: 'Big ball.' },
+                { id: 287, word: 'net', meaning: 'ネット', example: 'Over the net.' },
+                { id: 288, word: 'goal', meaning: 'ゴール', example: 'Score a goal.' },
+                { id: 289, word: 'team', meaning: 'チーム', example: 'Team sport.' },
+                { id: 290, word: 'player', meaning: '選手', example: 'Good player.' },
+                // 月(12語)
+                { id: 291, word: 'February', meaning: '2月', example: 'February short.' },
+                { id: 292, word: 'March', meaning: '3月', example: 'March spring.' },
+                { id: 293, word: 'April', meaning: '4月', example: 'April flowers.' },
+                { id: 294, word: 'May', meaning: '5月', example: 'May warm.' },
+                { id: 295, word: 'June', meaning: '6月', example: 'June rain.' },
+                { id: 296, word: 'July', meaning: '7月', example: 'July hot.' },
+                { id: 297, word: 'August', meaning: '8月', example: 'August summer.' },
+                { id: 298, word: 'September', meaning: '9月', example: 'September fall.' },
+                { id: 299, word: 'October', meaning: '10月', example: 'October cool.' },
+                { id: 300, word: 'November', meaning: '11月', example: 'November cold.' },
+                { id: 301, word: 'December', meaning: '12月', example: 'December Christmas.' },
+                { id: 302, word: 'hour', meaning: '時間', example: 'One hour.' },
+                // 時間関連(10語)
+                { id: 303, word: 'minute', meaning: '分', example: 'Five minutes.' },
+                { id: 304, word: 'second', meaning: '秒', example: 'Wait second.' },
+                { id: 305, word: 'o\'clock', meaning: '時', example: 'Three o\'clock.' },
+                { id: 306, word: 'past', meaning: '過ぎた', example: 'Past time.' },
+                { id: 307, word: 'future', meaning: '未来', example: 'Future plans.' },
+                { id: 308, word: 'present', meaning: '現在', example: 'Present time.' },
+                { id: 309, word: 'time', meaning: '時間', example: 'What time?' },
+                { id: 310, word: 'early', meaning: '早い', example: 'Early morning.' },
+                { id: 311, word: 'late', meaning: '遅い', example: 'Late night.' },
+                { id: 312, word: 'soon', meaning: 'すぐに', example: 'See you soon.' },
+                // より複雑な形容詞(20語)
+                { id: 313, word: 'smart', meaning: 'スマートな', example: 'Smart person.' },
+                { id: 314, word: 'clever', meaning: '賢い', example: 'Clever idea.' },
+                { id: 315, word: 'stupid', meaning: '愚かな', example: 'Stupid mistake.' },
+                { id: 316, word: 'funny', meaning: '面白い', example: 'Funny joke.' },
+                { id: 317, word: 'boring', meaning: 'つまらない', example: 'Boring movie.' },
+                { id: 318, word: 'interesting', meaning: '興味深い', example: 'Interesting book.' },
+                { id: 319, word: 'expensive', meaning: '高い', example: 'Expensive car.' },
+                { id: 320, word: 'cheap', meaning: '安い', example: 'Cheap price.' },
+                { id: 321, word: 'heavy', meaning: '重い', example: 'Heavy box.' },
+                { id: 322, word: 'light', meaning: '軽い', example: 'Light weight.' },
+                { id: 323, word: 'easy', meaning: '簡単な', example: 'Easy question.' },
+                { id: 324, word: 'difficult', meaning: '難しい', example: 'Difficult exam.' },
+                { id: 325, word: 'simple', meaning: 'シンプルな', example: 'Simple answer.' },
+                { id: 326, word: 'dark', meaning: '暗い', example: 'Dark room.' },
+                { id: 327, word: 'bright', meaning: '明るい', example: 'Bright light.' },
+                { id: 328, word: 'quiet', meaning: '静かな', example: 'Quiet place.' },
+                { id: 329, word: 'loud', meaning: 'うるさい', example: 'Loud noise.' },
+                { id: 330, word: 'deep', meaning: '深い', example: 'Deep water.' },
+                { id: 331, word: 'shallow', meaning: '浅い', example: 'Shallow pool.' },
+                { id: 332, word: 'wide', meaning: '広い', example: 'Wide road.' },
+                // より複雑な動詞(20語)
+                { id: 333, word: 'find', meaning: '見つける', example: 'Find your book.' },
+                { id: 334, word: 'lose', meaning: '失う', example: 'Lose your way.' },
+                { id: 335, word: 'give', meaning: '与える', example: 'Give me help.' },
+                { id: 336, word: 'take', meaning: 'とる', example: 'Take a seat.' },
+                { id: 337, word: 'bring', meaning: '持ってくる', example: 'Bring your book.' },
+                { id: 338, word: 'carry', meaning: '運ぶ', example: 'Carry the box.' },
+                { id: 339, word: 'build', meaning: '建てる', example: 'Build a house.' },
+                { id: 340, word: 'paint', meaning: '塗る', example: 'Paint the wall.' },
+                { id: 341, word: 'clean', meaning: 'きれいにする', example: 'Clean your room.' },
+                { id: 342, word: 'wash', meaning: '洗う', example: 'Wash your hands.' },
+                { id: 343, word: 'cook', meaning: '料理する', example: 'Cook dinner.' },
+                { id: 344, word: 'tell', meaning: '話す', example: 'Tell me story.' },
+                { id: 345, word: 'say', meaning: '言う', example: 'Say hello.' },
+                { id: 346, word: 'call', meaning: '呼ぶ', example: 'Call me.' },
+                { id: 347, word: 'meet', meaning: '会う', example: 'Meet my friend.' },
+                { id: 348, word: 'visit', meaning: '訪問する', example: 'Visit my house.' },
+                { id: 349, word: 'travel', meaning: '旅行する', example: 'Travel to Japan.' },
+                { id: 350, word: 'drive', meaning: '運転する', example: 'Drive a car.' },
+                { id: 351, word: 'ride', meaning: '乗る', example: 'Ride a bike.' },
+                { id: 352, word: 'climb', meaning: '登る', example: 'Climb the mountain.' },
+                // 位置・方向(10語)
+                { id: 353, word: 'above', meaning: '上に', example: 'Above the ground.' },
+                { id: 354, word: 'below', meaning: '下に', example: 'Below the sky.' },
+                { id: 355, word: 'in', meaning: '中に', example: 'In the room.' },
+                { id: 356, word: 'out', meaning: '外に', example: 'Go out.' },
+                { id: 357, word: 'on', meaning: '上に', example: 'On the table.' },
+                { id: 358, word: 'under', meaning: '下に', example: 'Under the bridge.' },
+                { id: 359, word: 'between', meaning: '間に', example: 'Between you and me.' },
+                { id: 360, word: 'near', meaning: '近い', example: 'Near the school.' },
+                { id: 361, word: 'far', meaning: '遠い', example: 'Far away.' },
+                { id: 362, word: 'behind', meaning: '後ろに', example: 'Behind the building.' },
+                // 実験・科学(10語)
+                { id: 363, word: 'experiment', meaning: '実験', example: 'Do experiment.' },
+                { id: 364, word: 'science', meaning: '科学', example: 'Science class.' },
+                { id: 365, word: 'nature', meaning: '自然', example: 'Nature beautiful.' },
+                { id: 366, word: 'plant', meaning: '植物', example: 'Green plant.' },
+                { id: 367, word: 'flower', meaning: '花', example: 'Red flower.' },
+                { id: 368, word: 'tree', meaning: '木', example: 'Big tree.' },
+                { id: 369, word: 'forest', meaning: '森林', example: 'Dense forest.' },
+                { id: 370, word: 'mountain', meaning: '山', example: 'High mountain.' },
+                { id: 371, word: 'river', meaning: '川', example: 'Clean river.' },
+                { id: 372, word: 'sea', meaning: '海', example: 'Blue sea.' },
+                // 建物・施設(10語)
+                { id: 373, word: 'building', meaning: '建物', example: 'Tall building.' },
+                { id: 374, word: 'church', meaning: '教会', example: 'Beautiful church.' },
+                { id: 375, word: 'hospital', meaning: '病院', example: 'Go hospital.' },
+                { id: 376, word: 'station', meaning: '駅', example: 'Train station.' },
+                { id: 377, word: 'bank', meaning: '銀行', example: 'Money bank.' },
+                { id: 378, word: 'shop', meaning: '店', example: 'Shopping shop.' },
+                { id: 379, word: 'market', meaning: '市場', example: 'Open market.' },
+                { id: 380, word: 'office', meaning: 'オフィス', example: 'Office work.' },
+                { id: 381, word: 'factory', meaning: '工場', example: 'Big factory.' },
+                { id: 382, word: 'restaurant', meaning: 'レストラン', example: 'Nice restaurant.' },
+                // 乗り物(10語)
+                { id: 383, word: 'car', meaning: '車', example: 'Fast car.' },
+                { id: 384, word: 'bus', meaning: 'バス', example: 'Take bus.' },
+                { id: 385, word: 'train', meaning: '電車', example: 'Fast train.' },
+                { id: 386, word: 'airplane', meaning: '飛行機', example: 'Fly airplane.' },
+                { id: 387, word: 'bike', meaning: 'バイク', example: 'Ride bike.' },
+                { id: 388, word: 'boat', meaning: 'ボート', example: 'Row boat.' },
+                { id: 389, word: 'ship', meaning: '船', example: 'Big ship.' },
+                { id: 390, word: 'taxi', meaning: 'タクシー', example: 'Take taxi.' },
+                { id: 391, word: 'truck', meaning: 'トラック', example: 'Big truck.' },
+                { id: 392, word: 'bicycle', meaning: '自転車', example: 'My bicycle.' },
+                // 家族・人間関係(8語)
+                { id: 393, word: 'aunt', meaning: '叔母さん', example: 'My aunt.' },
+                { id: 394, word: 'uncle', meaning: '叔父さん', example: 'My uncle.' },
+                { id: 395, word: 'cousin', meaning: 'いとこ', example: 'My cousin.' },
+                { id: 396, word: 'wife', meaning: '妻', example: 'His wife.' },
+                { id: 397, word: 'husband', meaning: '夫', example: 'Her husband.' },
+                { id: 398, word: 'daughter', meaning: '娘', example: 'My daughter.' },
+                { id: 399, word: 'son', meaning: '息子', example: 'My son.' },
+                { id: 400, word: 'person', meaning: '人', example: 'Good person.' },
+            ],
+            hard: [
+                // 上級（200語）
+                // より高度な動詞(30語)
+                { id: 401, word: 'understand', meaning: '理解する', example: 'Do you understand?' },
+                { id: 402, word: 'believe', meaning: '信じる', example: 'I believe you.' },
+                { id: 403, word: 'hope', meaning: '望む', example: 'I hope so.' },
+                { id: 404, word: 'wish', meaning: '願う', example: 'I wish for peace.' },
+                { id: 405, word: 'decide', meaning: '決める', example: 'Decide now.' },
+                { id: 406, word: 'choose', meaning: '選ぶ', example: 'Choose one.' },
+                { id: 407, word: 'agree', meaning: '同意する', example: 'I agree.' },
+                { id: 408, word: 'disagree', meaning: '反対する', example: 'I disagree.' },
+                { id: 409, word: 'refuse', meaning: '拒否する', example: 'Refuse offer.' },
+                { id: 410, word: 'accept', meaning: '受け入れる', example: 'Accept invitation.' },
+                { id: 411, word: 'allow', meaning: '許可する', example: 'Allow me.' },
+                { id: 412, word: 'forbid', meaning: '禁止する', example: 'Forbid entry.' },
+                { id: 413, word: 'require', meaning: '必要とする', example: 'Require help.' },
+                { id: 414, word: 'suggest', meaning: '提案する', example: 'Suggest idea.' },
+                { id: 415, word: 'promise', meaning: '約束する', example: 'Promise you.' },
+                { id: 416, word: 'request', meaning: '要求する', example: 'Request help.' },
+                { id: 417, word: 'demand', meaning: '要求する', example: 'Demand answer.' },
+                { id: 418, word: 'offer', meaning: '提供する', example: 'Offer help.' },
+                { id: 419, word: 'admit', meaning: '認める', example: 'Admit mistake.' },
+                { id: 420, word: 'deny', meaning: '否定する', example: 'Deny all.' },
+                { id: 421, word: 'explain', meaning: '説明する', example: 'Explain this.' },
+                { id: 422, word: 'describe', meaning: '述べる', example: 'Describe it.' },
+                { id: 423, word: 'compare', meaning: '比較する', example: 'Compare two.' },
+                { id: 424, word: 'consider', meaning: '考慮する', example: 'Consider offer.' },
+                { id: 425, word: 'discover', meaning: '発見する', example: 'Discover truth.' },
+                { id: 426, word: 'invent', meaning: '発明する', example: 'Invent new.' },
+                { id: 427, word: 'develop', meaning: '発展させる', example: 'Develop skill.' },
+                { id: 428, word: 'improve', meaning: '改善する', example: 'Improve grade.' },
+                { id: 429, word: 'fail', meaning: '失敗する', example: 'Fail test.' },
+                { id: 430, word: 'succeed', meaning: '成功する', example: 'Succeed try.' },
+                // 上級の形容詞(30語)
+                { id: 431, word: 'careful', meaning: '注意深い', example: 'Be careful.' },
+                { id: 432, word: 'careless', meaning: '不注意な', example: 'Careless mistake.' },
+                { id: 433, word: 'honest', meaning: '正直な', example: 'Honest person.' },
+                { id: 434, word: 'dishonest', meaning: '不正直な', example: 'Dishonest act.' },
+                { id: 435, word: 'brave', meaning: '勇敢な', example: 'Brave hero.' },
+                { id: 436, word: 'cowardly', meaning: '臆病な', example: 'Cowardly act.' },
+                { id: 437, word: 'rude', meaning: '失礼な', example: 'Rude behavior.' },
+                { id: 438, word: 'gentle', meaning: 'やさしい', example: 'Gentle voice.' },
+                { id: 439, word: 'rough', meaning: 'ざらざらした', example: 'Rough surface.' },
+                { id: 440, word: 'smooth', meaning: 'なめらかな', example: 'Smooth skin.' },
+                { id: 441, word: 'soft', meaning: 'やわらかい', example: 'Soft pillow.' },
+                { id: 442, word: 'hard', meaning: '硬い', example: 'Hard rock.' },
+                { id: 443, word: 'thick', meaning: '厚い', example: 'Thick book.' },
+                { id: 444, word: 'thin', meaning: '薄い', example: 'Thin paper.' },
+                { id: 445, word: 'tall', meaning: '背が高い', example: 'Tall person.' },
+                { id: 446, word: 'short', meaning: '背が低い', example: 'Short person.' },
+                { id: 447, word: 'long', meaning: '長い', example: 'Long hair.' },
+                { id: 448, word: 'old', meaning: '古い', example: 'Old building.' },
+                { id: 449, word: 'new', meaning: '新しい', example: 'New car.' },
+                { id: 450, word: 'young', meaning: '若い', example: 'Young person.' },
+                { id: 451, word: 'ancient', meaning: '古代の', example: 'Ancient Egypt.' },
+                { id: 452, word: 'modern', meaning: 'モダンな', example: 'Modern building.' },
+                { id: 453, word: 'traditional', meaning: '伝統的な', example: 'Traditional dance.' },
+                { id: 454, word: 'special', meaning: '特別な', example: 'Special day.' },
+                { id: 455, word: 'ordinary', meaning: '普通の', example: 'Ordinary day.' },
+                { id: 456, word: 'strange', meaning: '奇妙な', example: 'Strange sound.' },
+                { id: 457, word: 'familiar', meaning: '見慣れた', example: 'Familiar face.' },
+                { id: 458, word: 'similar', meaning: '似ている', example: 'Similar idea.' },
+                { id: 459, word: 'different', meaning: '異なる', example: 'Different color.' },
+                { id: 460, word: 'unique', meaning: 'ユニークな', example: 'Unique style.' },
+                // 抽象的な概念(30語)
+                { id: 461, word: 'truth', meaning: '真実', example: 'Truth matters.' },
+                { id: 462, word: 'lie', meaning: '嘘', example: 'No lie.' },
+                { id: 463, word: 'justice', meaning: '正義', example: 'Justice wins.' },
+                { id: 464, word: 'evil', meaning: '悪', example: 'Fight evil.' },
+                { id: 465, word: 'freedom', meaning: '自由', example: 'Freedom important.' },
+                { id: 466, word: 'prison', meaning: '監獄', example: 'In prison.' },
+                { id: 467, word: 'peace', meaning: '平和', example: 'World peace.' },
+                { id: 468, word: 'war', meaning: '戦争', example: 'No war.' },
+                { id: 469, word: 'hope', meaning: '希望', example: 'Full hope.' },
+                { id: 470, word: 'despair', meaning: '絶望', example: 'No despair.' },
+                { id: 471, word: 'courage', meaning: '勇気', example: 'Take courage.' },
+                { id: 472, word: 'fear', meaning: '恐れ', example: 'Face fear.' },
+                { id: 473, word: 'love', meaning: '愛', example: 'Love all.' },
+                { id: 474, word: 'hate', meaning: '憎しみ', example: 'No hate.' },
+                { id: 475, word: 'friendship', meaning: '友情', example: 'True friendship.' },
+                { id: 476, word: 'betrayal', meaning: '裏切り', example: 'No betrayal.' },
+                { id: 477, word: 'trust', meaning: '信頼', example: 'Build trust.' },
+                { id: 478, word: 'doubt', meaning: '疑い', example: 'Have doubt.' },
+                { id: 479, word: 'faith', meaning: '信仰', example: 'Have faith.' },
+                { id: 480, word: 'belief', meaning: '信念', example: 'Strong belief.' },
+                { id: 481, word: 'success', meaning: '成功', example: 'Path success.' },
+                { id: 482, word: 'failure', meaning: '失敗', example: 'Learn failure.' },
+                { id: 483, word: 'achievement', meaning: '達成', example: 'Great achievement.' },
+                { id: 484, word: 'progress', meaning: '進歩', example: 'Make progress.' },
+                { id: 485, word: 'improvement', meaning: '改善', example: 'Need improvement.' },
+                { id: 486, word: 'change', meaning: '変化', example: 'Big change.' },
+                { id: 487, word: 'growth', meaning: '成長', example: 'Personal growth.' },
+                { id: 488, word: 'development', meaning: '発展', example: 'Country development.' },
+                { id: 489, word: 'knowledge', meaning: '知識', example: 'Gain knowledge.' },
+                { id: 490, word: 'wisdom', meaning: '知恵', example: 'Ancient wisdom.' },
+                // 自然科学(20語)
+                { id: 491, word: 'atom', meaning: '原子', example: 'Atom small.' },
+                { id: 492, word: 'molecule', meaning: '分子', example: 'Molecule tiny.' },
+                { id: 493, word: 'element', meaning: '要素', example: 'Element exist.' },
+                { id: 494, word: 'matter', meaning: '物質', example: 'Matter physical.' },
+                { id: 495, word: 'energy', meaning: 'エネルギー', example: 'Energy power.' },
+                { id: 496, word: 'force', meaning: '力', example: 'Strong force.' },
+                { id: 497, word: 'gravity', meaning: '重力', example: 'Gravity pull.' },
+                { id: 498, word: 'weight', meaning: '重さ', example: 'Heavy weight.' },
+                { id: 499, word: 'speed', meaning: '速さ', example: 'Fast speed.' },
+                { id: 500, word: 'temperature', meaning: '温度', example: 'High temperature.' },
+                { id: 501, word: 'liquid', meaning: '液体', example: 'Water liquid.' },
+                { id: 502, word: 'solid', meaning: '固体', example: 'Rock solid.' },
+                { id: 503, word: 'gas', meaning: 'ガス', example: 'Air gas.' },
+                { id: 504, word: 'chemical', meaning: '化学', example: 'Chemical reaction.' },
+                { id: 505, word: 'reaction', meaning: '反応', example: 'Quick reaction.' },
+                { id: 506, word: 'mixture', meaning: '混合', example: 'Mix mixture.' },
+                { id: 507, word: 'solution', meaning: 'ソリューション', example: 'Good solution.' },
+                { id: 508, word: 'color', meaning: '色', example: 'Bright color.' },
+                { id: 509, word: 'light', meaning: '光', example: 'Bright light.' },
+                { id: 510, word: 'sound', meaning: '音', example: 'Loud sound.' },
+                // 人間関係と社会(20語)
+                { id: 511, word: 'government', meaning: '政府', example: 'Government rule.' },
+                { id: 512, word: 'law', meaning: '法律', example: 'Follow law.' },
+                { id: 513, word: 'rule', meaning: 'ルール', example: 'Follow rule.' },
+                { id: 514, word: 'discipline', meaning: '規律', example: 'Need discipline.' },
+                { id: 515, word: 'order', meaning: '秩序', example: 'Keep order.' },
+                { id: 516, word: 'chaos', meaning: 'カオス', example: 'No chaos.' },
+                { id: 517, word: 'system', meaning: 'システム', example: 'New system.' },
+                { id: 518, word: 'organization', meaning: '組織', example: 'Big organization.' },
+                { id: 519, word: 'communication', meaning: 'コミュニケーション', example: 'Good communication.' },
+                { id: 520, word: 'language', meaning: '言語', example: 'Learn language.' },
+                { id: 521, word: 'culture', meaning: '文化', example: 'Different culture.' },
+                { id: 522, word: 'tradition', meaning: '伝統', example: 'Keep tradition.' },
+                { id: 523, word: 'custom', meaning: '習慣', example: 'Local custom.' },
+                { id: 524, word: 'society', meaning: '社会', example: 'Modern society.' },
+                { id: 525, word: 'community', meaning: 'コミュニティ', example: 'Local community.' },
+                { id: 526, word: 'civilization', meaning: '文明', example: 'Ancient civilization.' },
+                { id: 527, word: 'education', meaning: '教育', example: 'Good education.' },
+                { id: 528, word: 'politics', meaning: '政治', example: 'Study politics.' },
+                { id: 529, word: 'economy', meaning: '経済', example: 'Strong economy.' },
+                { id: 530, word: 'business', meaning: 'ビジネス', example: 'Start business.' },
+                // 芸術・音楽(15語)
+                { id: 531, word: 'art', meaning: '美術', example: 'Create art.' },
+                { id: 532, word: 'music', meaning: '音楽', example: 'Play music.' },
+                { id: 533, word: 'literature', meaning: '文学', example: 'Study literature.' },
+                { id: 534, word: 'poetry', meaning: '詩', example: 'Read poetry.' },
+                { id: 535, word: 'theater', meaning: '劇場', example: 'Visit theater.' },
+                { id: 536, word: 'cinema', meaning: '映画館', example: 'Go cinema.' },
+                { id: 537, word: 'movie', meaning: '映画', example: 'Watch movie.' },
+                { id: 538, word: 'song', meaning: '歌', example: 'Sing song.' },
+                { id: 539, word: 'instrument', meaning: '楽器', example: 'Play instrument.' },
+                { id: 540, word: 'dance', meaning: 'ダンス', example: 'Like dance.' },
+                { id: 541, word: 'painting', meaning: '絵画', example: 'View painting.' },
+                { id: 542, word: 'sculpture', meaning: '彫刻', example: 'See sculpture.' },
+                { id: 543, word: 'performance', meaning: 'パフォーマンス', example: 'Great performance.' },
+                { id: 544, word: 'exhibition', meaning: '展示', example: 'Visit exhibition.' },
+                { id: 545, word: 'concert', meaning: 'コンサート', example: 'Attend concert.' },
+                // 技術・職業(15語)
+                { id: 546, word: 'technology', meaning: 'テクノロジー', example: 'Modern technology.' },
+                { id: 547, word: 'computer', meaning: 'コンピュータ', example: 'Use computer.' },
+                { id: 548, word: 'engineer', meaning: 'エンジニア', example: 'Be engineer.' },
+                { id: 549, word: 'scientist', meaning: '科学者', example: 'Great scientist.' },
+                { id: 550, word: 'doctor', meaning: '医者', example: 'Visit doctor.' },
+                { id: 551, word: 'nurse', meaning: '看護師', example: 'Help nurse.' },
+                { id: 552, word: 'lawyer', meaning: '弁護士', example: 'Hire lawyer.' },
+                { id: 553, word: 'artist', meaning: 'アーティスト', example: 'Talented artist.' },
+                { id: 554, word: 'musician', meaning: 'ミュージシャン', example: 'Professional musician.' },
+                { id: 555, word: 'actor', meaning: '俳優', example: 'Famous actor.' },
+                { id: 556, word: 'manager', meaning: 'マネージャー', example: 'Good manager.' },
+                { id: 557, word: 'worker', meaning: '労働者', example: 'Hard worker.' },
+                { id: 558, word: 'industry', meaning: '産業', example: 'Major industry.' },
+                { id: 559, word: 'manufacture', meaning: '製造', example: 'Manufacture goods.' },
+                { id: 560, word: 'profession', meaning: '職業', example: 'Choose profession.' },
+                // 健康・医学(15語)
+                { id: 561, word: 'health', meaning: '健康', example: 'Good health.' },
+                { id: 562, word: 'disease', meaning: '病気', example: 'Have disease.' },
+                { id: 563, word: 'medicine', meaning: '薬', example: 'Take medicine.' },
+                { id: 564, word: 'hospital', meaning: '病院', example: 'Go hospital.' },
+                { id: 565, word: 'surgery', meaning: '手術', example: 'Need surgery.' },
+                { id: 566, word: 'treatment', meaning: '治療', example: 'Get treatment.' },
+                { id: 567, word: 'cure', meaning: '治療', example: 'Find cure.' },
+                { id: 568, word: 'injury', meaning: '怪我', example: 'Bad injury.' },
+                { id: 569, word: 'pain', meaning: '痛み', example: 'Feel pain.' },
+                { id: 570, word: 'exercise', meaning: '運動', example: 'Do exercise.' },
+                { id: 571, word: 'diet', meaning: 'ダイエット', example: 'Start diet.' },
+                { id: 572, word: 'fitness', meaning: 'フィットネス', example: 'Good fitness.' },
+                { id: 573, word: 'nutrition', meaning: '栄養', example: 'Need nutrition.' },
+                { id: 574, word: 'vitamins', meaning: 'ビタミン', example: 'Take vitamins.' },
+                { id: 575, word: 'allergy', meaning: 'アレルギー', example: 'Have allergy.' },
+                // 環境・地理(15語)
+                { id: 576, word: 'earth', meaning: '地球', example: 'Our earth.' },
+                { id: 577, word: 'planet', meaning: '惑星', example: 'Another planet.' },
+                { id: 578, word: 'sun', meaning: '太陽', example: 'Bright sun.' },
+                { id: 579, word: 'moon', meaning: '月', example: 'Full moon.' },
+                { id: 580, word: 'star', meaning: '星', example: 'Bright star.' },
+                { id: 581, word: 'sky', meaning: '空', example: 'Blue sky.' },
+                { id: 582, word: 'universe', meaning: '宇宙', example: 'Vast universe.' },
+                { id: 583, word: 'space', meaning: '宇宙', example: 'Outer space.' },
+                { id: 584, word: 'atmosphere', meaning: '大気', example: 'Earth atmosphere.' },
+                { id: 585, word: 'climate', meaning: '気候', example: 'Warm climate.' },
+                { id: 586, word: 'weather', meaning: '天気', example: 'Nice weather.' },
+                { id: 587, word: 'environment', meaning: '環境', example: 'Protect environment.' },
+                { id: 588, word: 'pollution', meaning: '汚染', example: 'Air pollution.' },
+                { id: 589, word: 'ecology', meaning: '生態系', example: 'Study ecology.' },
+                { id: 590, word: 'conservation', meaning: '保全', example: 'Nature conservation.' },
+                // 概念的な単語(10語)
+                { id: 591, word: 'quantity', meaning: '量', example: 'Large quantity.' },
+                { id: 592, word: 'quality', meaning: '質', example: 'High quality.' },
+                { id: 593, word: 'important', meaning: '重要な', example: 'Important matter.' },
+                { id: 594, word: 'essential', meaning: '本質的な', example: 'Essential part.' },
+                { id: 595, word: 'necessary', meaning: '必要な', example: 'Necessary thing.' },
+                { id: 596, word: 'possible', meaning: '可能な', example: 'Possible answer.' },
+                { id: 597, word: 'impossible', meaning: '不可能な', example: 'Impossible task.' },
+                { id: 598, word: 'probable', meaning: '起こりそうな', example: 'Probable result.' },
+                { id: 599, word: 'certain', meaning: '確実な', example: 'Certain fact.' },
+                { id: 600, word: 'uncertain', meaning: '不確実な', example: 'Uncertain future.' },
+            ]
+        };
+
+        // 状態管理
+        let state = {
+            currentScreen: 'home',
+            selectedDifficulty: 'easy',
+            selectedMode: null,
+            currentWordIndex: 0,
+            learnedWords: new Set(),
+            quizAnswers: {},
+            listeningAnswers: {},
+            spellingInput: '',
+            quizScore: null,
+            spellingFeedback: '',
+        };
+
+        // DOM要素
+        const screens = {
+            home: document.getElementById('homeScreen'),
+            quiz: document.getElementById('quizScreen'),
+            listening: document.getElementById('listeningScreen'),
+            spelling: document.getElementById('spellingScreen'),
+            result: document.getElementById('resultScreen'),
+            complete: document.getElementById('completeScreen'),
+        };
+
+        function init() {
+            setupEventListeners();
+            updateProgress();
+        }
+
+        function setupEventListeners() {
+            document.querySelectorAll('.difficulty-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    document.querySelectorAll('.difficulty-btn').forEach(b => b.classList.remove('active'));
+                    e.target.classList.add('active');
+                    state.selectedDifficulty = e.target.dataset.difficulty;
+                    state.currentWordIndex = 0;
+                    state.quizAnswers = {};
+                    state.listeningAnswers = {};
+                });
+            });
+
+            document.querySelectorAll('.mode-button').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    state.selectedMode = btn.dataset.mode;
+                    state.currentWordIndex = 0;
+                    state.quizAnswers = {};
+                    state.listeningAnswers = {};
+                    state.spellingInput = '';
+                    state.quizScore = null;
+                    state.spellingFeedback = '';
+
+                    if (state.selectedMode === 'quiz') {
+                        renderQuiz();
+                        showScreen('quiz');
+                    } else if (state.selectedMode === 'listening') {
+                        renderListening();
+                        showScreen('listening');
+                    } else if (state.selectedMode === 'spelling') {
+                        renderSpelling();
+                        showScreen('spelling');
+                    }
+                });
+            });
+
+            document.querySelectorAll('.back-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    showScreen('home');
+                    state.selectedMode = null;
+                });
+            });
+
+            document.getElementById('quizSubmitBtn').addEventListener('click', submitQuiz);
+            document.getElementById('listeningSubmitBtn').addEventListener('click', submitListening);
+            document.getElementById('spellingCheckBtn').addEventListener('click', checkSpelling);
+            document.getElementById('spellingInput').addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') checkSpelling();
+            });
+
+            document.getElementById('retryBtn').addEventListener('click', () => {
+                state.quizScore = null;
+                state.quizAnswers = {};
+                state.listeningAnswers = {};
+                state.currentWordIndex = 0;
+                if (state.selectedMode === 'quiz') renderQuiz();
+                else if (state.selectedMode === 'listening') renderListening();
+                showScreen(state.selectedMode);
+            });
+
+            document.getElementById('homeBtn').addEventListener('click', () => {
+                showScreen('home');
+                state.selectedMode = null;
+            });
+
+            document.getElementById('completeHomeBtn').addEventListener('click', () => {
+                showScreen('home');
+                state.selectedMode = null;
+            });
+        }
+
+        function showScreen(screenName) {
+            Object.values(screens).forEach(screen => screen.classList.remove('active'));
+            screens[screenName].classList.add('active');
+            state.currentScreen = screenName;
+        }
+
+        function renderQuiz() {
+            const words = wordData[state.selectedDifficulty];
+            const container = document.getElementById('quizContainer');
+            container.innerHTML = '';
+
+            words.forEach((word, idx) => {
+                const options = [word.word, ...words.filter((_, i) => i !== idx).slice(0, 3).map(w => w.word)]
+                    .sort(() => Math.random() - 0.5);
+
+                const questionHTML = `
+                    <div class="quiz-question">
+                        <div class="quiz-question-text">問題 ${idx + 1}: 「${word.meaning}」の英語は？</div>
+                        <div class="options-grid">
+                            ${options.map(opt => `
+                                <button class="option-btn" data-word-id="${word.id}" data-option="${opt}">
+                                    ${opt}
+                                </button>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+                container.innerHTML += questionHTML;
+            });
+
+            document.querySelectorAll('.option-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const wordId = e.target.dataset.wordId;
+                    const option = e.target.dataset.option;
+                    state.quizAnswers[wordId] = option;
+
+                    document.querySelectorAll(`[data-word-id="${wordId}"]`).forEach(b => b.classList.remove('selected'));
+                    e.target.classList.add('selected');
+                    updateQuizProgress();
+                });
+            });
+
+            updateQuizProgress();
+        }
+
+        function renderListening() {
+            const words = wordData[state.selectedDifficulty];
+            const container = document.getElementById('listeningContainer');
+            container.innerHTML = '';
+
+            words.forEach((word, idx) => {
+                const options = [word.word, ...words.filter((_, i) => i !== idx).slice(0, 3).map(w => w.word)]
+                    .sort(() => Math.random() - 0.5);
+
+                const questionHTML = `
+                    <div class="quiz-question">
+                        <div class="quiz-question-text">問題 ${idx + 1}: 聞こえた英単語を選んでください</div>
+                        <button class="listen-btn" data-word="${word.word}">🔊 音声を再生</button>
+                        <div class="options-grid">
+                            ${options.map(opt => `
+                                <button class="option-btn" data-word-id="${word.id}" data-option="${opt}">
+                                    ${opt}
+                                </button>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+                container.innerHTML += questionHTML;
+            });
+
+            document.querySelectorAll('.listen-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    playAudio(btn.dataset.word);
+                });
+            });
+
+            document.querySelectorAll('.option-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const wordId = e.target.dataset.wordId;
+                    const option = e.target.dataset.option;
+                    state.listeningAnswers[wordId] = option;
+
+                    document.querySelectorAll(`[data-word-id="${wordId}"]`).forEach(b => b.classList.remove('selected'));
+                    e.target.classList.add('selected');
+                    updateListeningProgress();
+                });
+            });
+
+            updateListeningProgress();
+        }
+
+        function renderSpelling() {
+            const words = wordData[state.selectedDifficulty];
+            const currentWord = words[state.currentWordIndex];
+
+            if (state.currentWordIndex >= words.length) {
+                showScreen('complete');
+                return;
+            }
+
+            const questionHTML = `
+                <div class="spelling-question">
+                    <div class="spelling-label">つぎの意味の英単語を入力してください</div>
+                    <div class="spelling-meaning">${currentWord.meaning}</div>
+                </div>
+            `;
+            document.getElementById('spellingQuestion').innerHTML = questionHTML;
+            document.getElementById('spellingInput').value = '';
+            document.getElementById('spellingFeedback').innerHTML = '';
+            document.getElementById('spellingInput').focus();
+
+            updateSpellingProgress();
+        }
+
+        function playAudio(word) {
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+                const utterance = new SpeechSynthesisUtterance(word);
+                utterance.lang = 'en-US';
+                utterance.rate = 0.8;
+                utterance.pitch = 1.5;  // ピッチを上げて女性の声にする
+                utterance.volume = 1.0;
+
+                // 利用可能な音声から女性の声を選択
+                const voices = window.speechSynthesis.getVoices();
+                const femaleVoice = voices.find(voice => 
+                    voice.lang.includes('en') && 
+                    (voice.name.includes('Google US English Female') || 
+                     voice.name.includes('female') ||
+                     voice.name.includes('Female') ||
+                     voice.name.includes('woman') ||
+                     voice.name.includes('Victoria') ||
+                     voice.name.includes('Samantha') ||
+                     voice.name.includes('Karen'))
+                );
+                
+                if (femaleVoice) {
+                    utterance.voice = femaleVoice;
+                }
+                
+                window.speechSynthesis.speak(utterance);
+            }
+        }
+
+        function submitQuiz() {
+            const words = wordData[state.selectedDifficulty];
+            let score = 0;
+
+            words.forEach((word) => {
+                if (state.quizAnswers[word.id] === word.word) {
+                    score++;
+                    state.learnedWords.add(word.id);
+                }
+            });
+
+            state.quizScore = score;
+            showResult(score, words.length);
+        }
+
+        function submitListening() {
+            const words = wordData[state.selectedDifficulty];
+            let score = 0;
+
+            words.forEach((word) => {
+                if (state.listeningAnswers[word.id] === word.word) {
+                    score++;
+                    state.learnedWords.add(word.id);
+                }
+            });
+
+            state.quizScore = score;
+            showResult(score, words.length);
+        }
+
+        function checkSpelling() {
+            const words = wordData[state.selectedDifficulty];
+            const currentWord = words[state.currentWordIndex];
+            const input = document.getElementById('spellingInput').value.toLowerCase();
+            const feedbackEl = document.getElementById('spellingFeedback');
+
+            if (input === currentWord.word.toLowerCase()) {
+                feedbackEl.innerHTML = '正解！✓';
+                feedbackEl.className = 'feedback correct';
+                state.learnedWords.add(currentWord.id);
+
+                setTimeout(() => {
+                    state.currentWordIndex++;
+                    renderSpelling();
+                    updateProgress();
+                }, 1000);
+            } else {
+                feedbackEl.innerHTML = `違います。答え: ${currentWord.word}`;
+                feedbackEl.className = 'feedback incorrect';
+            }
+        }
+
+        function showResult(score, total) {
+            const emoji = score === total ? '🎉' : score >= total * 0.7 ? '👍' : '📊';
+            document.getElementById('resultEmoji').textContent = emoji;
+            document.getElementById('resultScore').textContent = `${score} / ${total}`;
+            showScreen('result');
+            updateProgress();
+        }
+
+        function updateProgress() {
+            const totalWords = 600;
+            const learnedCount = state.learnedWords.size;
+            const percent = Math.round((learnedCount / totalWords) * 100);
+
+            document.getElementById('learnedCount').textContent = learnedCount;
+            document.getElementById('totalCount').textContent = totalWords;
+            document.getElementById('progressPercent').textContent = percent + '%';
+            document.getElementById('progressFill').style.width = percent + '%';
+        }
+
+        function updateQuizProgress() {
+            const words = wordData[state.selectedDifficulty];
+            document.getElementById('quizProgress').textContent = `${Object.keys(state.quizAnswers).length} / ${words.length}`;
+            document.getElementById('quizSubmitBtn').disabled = Object.keys(state.quizAnswers).length < words.length;
+        }
+
+        function updateListeningProgress() {
+            const words = wordData[state.selectedDifficulty];
+            document.getElementById('listeningProgress').textContent = `${Object.keys(state.listeningAnswers).length} / ${words.length}`;
+            document.getElementById('listeningSubmitBtn').disabled = Object.keys(state.listeningAnswers).length < words.length;
+        }
+
+        function updateSpellingProgress() {
+            const words = wordData[state.selectedDifficulty];
+            document.getElementById('spellingProgress').textContent = `${state.currentWordIndex + 1} / ${words.length}`;
+        }
+
+        init();
+    </script>
+</body>
+</html>
